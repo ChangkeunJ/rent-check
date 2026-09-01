@@ -1,0 +1,41 @@
+{
+  "name": "rent-check",
+  "version": "0.1.0",
+  "description": "What new tenancies actually rent for, from the bond every state makes landlords lodge",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "test": "tsc && node --test dist/test/*.test.js",
+    "web": "vite",
+    "api": "wrangler pages dev public --port 8787",
+    "build:worker": "esbuild worker/index.ts --bundle --format=esm --target=es2022 --conditions=worker,browser --outfile=public/_worker.js",
+    "build:web": "tsc -p web/tsconfig.json && vite build && npm run build:worker",
+    "check": "tsc && tsc -p web/tsconfig.json && tsc -p worker/tsconfig.json",
+    "deploy": "npm run build:web && wrangler pages deploy",
+    "nsw": "tsc && node dist/src/nsw.js",
+    "qld": "tsc && node dist/src/qld.js",
+    "serve": "tsc && node dist/src/api.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^1.1.0",
+    "pg": "^8.13.1",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260702.1",
+    "@types/node": "^22.10.2",
+    "@types/pg": "^8.11.10",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.5",
+    "@vitejs/plugin-react": "^6.1.1",
+    "typescript": "^5.7.2",
+    "vite": "^8.2.2",
+    "wrangler": "^3.114.17"
+  }
+}
