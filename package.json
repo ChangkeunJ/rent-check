@@ -16,7 +16,9 @@
     "deploy": "npm run build:web && wrangler pages deploy",
     "nsw": "tsc && node dist/src/nsw.js",
     "qld": "tsc && node dist/src/qld.js",
-    "serve": "tsc && node dist/src/api.js"
+    "serve": "tsc && node dist/src/api.js",
+    "vic": "tsc && node dist/src/vic.js",
+    "place": "tsc && node dist/src/place.js"
   },
   "engines": {
     "node": ">=20"

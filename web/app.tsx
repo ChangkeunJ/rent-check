@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import { RULES, check } from './rules'
 
-type Cover = { lodgements: number; postcodes: number; latest: string; earliest: string; medians: number; quarter: string }
-type Spread = { n: number; p25: string; median: string; p75: string; low: string; high: string; latest: string }
+type Cover = { lodgements: number; postcodes: number; latest: string; earliest: string; medians: number; quarter: string; vic: number }
+type Place = { state: string; kind: string; area: string; rows: boolean; label: string }
+type Spread = { n: number; p25: string | null; median: string; p75: string | null; low: string; high: string; latest: string }
 type Rank = { n: number; below: number }
 type Point = { at: string; rent: string; n: number | null }
-type Mover = { postcode: string; was: string; now: string; n: number; pct: string }
+type Mover = { postcode: string; label: string | null; was: string; now: string; n: number; pct: string }
 
 const KINDS = [
   { id: 'H', label: 'House' },
@@ -13,6 +14,7 @@ const KINDS = [
   { id: 'T', label: 'Townhouse' },
 ]
 const BEDS = ['1', '2', '3', '4', '5']
+const HOME: Place = { state: 'NSW', kind: 'postcode', area: '2000', rows: true, label: 'Sydney, Haymarket, Millers Point' }
 
 function useJson<T>(url: string | null) {
   const [v, setV] = useState<T | null>(null)
@@ -39,9 +41,6 @@ const num = (n: number | string) => Number(n).toLocaleString('en-AU')
 const month = (iso: string) =>
   new Date(iso).toLocaleDateString('en-AU', { month: 'short', year: 'numeric' })
 
-// A postcode says which state it is in, and the states publish different things.
-const state = (pc: string) => (pc.startsWith('4') ? 'QLD' : 'NSW')
-
 function Line({ d }: { d: Point[] }) {
   const w = 720
   const h = 190
@@ -55,7 +54,7 @@ function Line({ d }: { d: Point[] }) {
   const last = d[d.length - 1]!
 
   return (
-    <svg className="chart" viewBox={`0 0 ${w} ${h}`} role="img" aria-label="median rent by month">
+    <svg className="chart" viewBox={`0 0 ${w} ${h}`} role="img" aria-label="median rent over time">
       <line x1={pad} y1={y(0)} x2={w - pad} y2={y(0)} className="axis" />
       <path d={`${line} L ${x(last.at)} ${y(0)} L ${x(d[0]!.at)} ${y(0)} Z`} className="fill" />
       <path d={line} className="line" />
@@ -86,10 +85,10 @@ function Bar({ s }: { s: Spread }) {
   )
 }
 
-function Yours({ pc, kind, beds }: { pc: string; kind: string; beds: string }) {
+function Yours({ place, kind, beds }: { place: Place; kind: string; beds: string }) {
   const [rent, setRent] = useState('')
   const n = Number(rent)
-  const ask = n > 0 ? `/api/rank?postcode=${pc}&dwelling=${kind}&beds=${beds}&rent=${n}` : null
+  const ask = n > 0 ? `/api/rank?area=${place.area}&dwelling=${kind}&beds=${beds}&rent=${n}` : null
   const { v } = useJson<Rank>(ask)
   const share = v && v.n > 0 ? Math.round((v.below / v.n) * 100) : null
   return (
@@ -106,35 +105,77 @@ function Yours({ pc, kind, beds }: { pc: string; kind: string; beds: string }) {
   )
 }
 
-function Result({ pc, kind, beds }: { pc: string; kind: string; beds: string }) {
-  const qs = `postcode=${pc}&dwelling=${kind}&beds=${beds}`
-  const st = state(pc)
-  const { v: s } = useJson<Spread>(st === 'NSW' ? `/api/spread?${qs}` : null)
-  const { v: line, err } = useJson<Point[]>(`/api/series?state=${st}&${qs}`)
+// Somewhere to type a suburb rather than a postcode, since a postal area is a
+// delivery route and nobody says they live in one.
+function Find({ pick }: { pick: (p: Place) => void }) {
+  const [text, setText] = useState('')
+  const { v } = useJson<Place[]>(text.trim().length >= 2 ? `/api/find?q=${encodeURIComponent(text.trim())}` : null)
+  const take = (p: Place) => {
+    pick(p)
+    setText('')
+  }
+  return (
+    <div className="find-box">
+      <label htmlFor="q">Postcode or suburb</label>
+      <input id="q" value={text} autoComplete="off" placeholder="Bondi, 3056, Brunswick"
+             onChange={(e) => setText(e.target.value)}
+             onKeyDown={(e) => e.key === 'Enter' && v?.[0] && take(v[0])} />
+      {text.trim().length >= 2 && (
+        <ul className="hits">
+          {v?.length ? v.map((p) => (
+            <li key={`${p.state}/${p.kind}/${p.area}`}>
+              <button type="button" onClick={() => take(p)}>
+                <strong>{p.area}</strong>
+                <span>{p.kind === 'postcode' ? p.label : p.state}</span>
+              </button>
+            </li>
+          )) : <li className="none">{v ? 'Nothing there yet.' : 'Looking.'}</li>}
+        </ul>
+      )}
+    </div>
+  )
+}
+
+function Result({ place, kind, beds }: { place: Place; kind: string; beds: string }) {
+  const qs = `area=${encodeURIComponent(place.area)}&dwelling=${kind}&beds=${beds}`
+  const { v: rows } = useJson<Spread>(place.rows ? `/api/spread?${qs}` : null)
+  const { v: one } = useJson<Spread | null>(place.rows ? null : `/api/latest?state=${place.state}&kind=${place.kind}&${qs}`)
+  const { v: line, err } = useJson<Point[]>(
+    `/api/series?rows=${place.rows ? 1 : 0}&state=${place.state}&kind=${place.kind}&${qs}`)
+  const s = place.rows ? rows : one
   const kindName = KINDS.find((k) => k.id === kind)?.label.toLowerCase()
+  const empty = place.rows ? s && s.n === 0 : one === null
 
   if (err) return <p className="err">{err}</p>
-  if (st === 'NSW' && s && s.n === 0 && !line?.length)
-    return <p className="empty">No bond was lodged for a {beds} bedroom {kindName} in {pc} in the window. Try a different size, or a neighbouring postcode.</p>
+  if (empty && !line?.length)
+    return <p className="empty">Nothing published for a {beds} bedroom {kindName} in {place.area}. Try a different size, or somewhere next door.</p>
 
   return (
     <>
-      {s && s.n > 0 && (
+      {s && (!place.rows || s.n > 0) && (
         <div className="hero">
           <div>
-            <span className="k">Median rent, {beds} bedroom {kindName}, {pc}</span>
+            <span className="k">Median rent, {beds} bedroom {kindName}, {place.area}</span>
             <span className="figure">{money(s.median)}<em>a week</em></span>
             <span className="k">
-              {num(s.n)} bonds lodged in the three months to {month(s.latest)}
+              {place.rows
+                ? `${num(s.n)} bonds lodged in the three months to ${month(s.latest)}`
+                : `${s.n ? `${num(s.n)} bonds behind it, ` : ''}the year to ${month(s.latest)}`}
             </span>
           </div>
-          <Bar s={s} />
+          {s.p25 !== null && s.p75 !== null && <Bar s={s} />}
         </div>
       )}
-      {st === 'QLD' && (
+      {place.state === 'QLD' && (
         <p className="note pad">
           Queensland publishes the median already worked out, once a quarter, so there is no spread to show and no way
           to place your own rent inside it. New South Wales publishes every lodgement.
+        </p>
+      )}
+      {place.state === 'VIC' && (
+        <p className="note pad">
+          Victoria publishes a moving annual median for each suburb with the quartiles beside it, but not the
+          lodgements themselves, so the spread is the department's rather than one worked out here.
         </p>
       )}
       {line && line.length > 1 && (
@@ -142,7 +183,7 @@ function Result({ pc, kind, beds }: { pc: string; kind: string; beds: string }) 
           <Line d={line} />
         </div>
       )}
-      {st === 'NSW' && s && s.n > 0 && <Yours pc={pc} kind={kind} beds={beds} />}
+      {place.rows && s && s.n > 0 && <Yours place={place} kind={kind} beds={beds} />}
     </>
   )
 }
@@ -199,7 +240,7 @@ function Allowed({ st }: { st: string }) {
   )
 }
 
-function Movers() {
+function Movers({ pick }: { pick: (p: Place) => void }) {
   const [kind, setKind] = useState('H')
   const [beds, setBeds] = useState('3')
   const { v } = useJson<Mover[]>(`/api/movers?dwelling=${kind}&beds=${beds}`)
@@ -228,8 +269,9 @@ function Movers() {
           </thead>
           <tbody>
             {v.map((m) => (
-              <tr key={m.postcode}>
-                <td className="name">{m.postcode}</td>
+              <tr key={m.postcode} tabIndex={0} onClick={() => pick({ state: 'NSW', kind: 'postcode', area: m.postcode, rows: true, label: m.label ?? m.postcode })}
+                  onKeyDown={(e) => e.key === 'Enter' && pick({ state: 'NSW', kind: 'postcode', area: m.postcode, rows: true, label: m.label ?? m.postcode })}>
+                <td className="name">{m.postcode}<em>{m.label}</em></td>
                 <td className="r dim">{money(m.was)}</td>
                 <td className="r strong">{money(m.now)}</td>
                 <td className={'r ' + (Number(m.pct) > 0 ? 'up' : 'down')}>
@@ -246,10 +288,26 @@ function Movers() {
 }
 
 export default function App() {
-  const [pc, setPc] = useState('2000')
+  const [place, setPlace] = useState<Place>(HOME)
   const [kind, setKind] = useState('F')
   const [beds, setBeds] = useState('2')
   const { v: c } = useJson<Cover>('/api/coverage')
+
+  // The place goes in the hash so a link to a suburb is a link to that suburb.
+  const pick = (p: Place) => {
+    location.hash = encodeURIComponent(p.area)
+    setPlace(p)
+  }
+  useEffect(() => {
+    const want = decodeURIComponent(location.hash.slice(1))
+    if (!want) return
+    fetch(`/api/find?q=${encodeURIComponent(want)}`)
+      .then((r) => r.json())
+      .then((v: Place[]) => {
+        const hit = v.find((p) => p.area.toLowerCase() === want.toLowerCase())
+        if (hit) setPlace(hit)
+      }, () => {})
+  }, [])
 
   return (
     <>
@@ -263,8 +321,7 @@ export default function App() {
           {c && (
             <p className="cover">
               {num(c.lodgements)} bond lodgements across {c.postcodes} New South Wales postcodes, {month(c.earliest)} to{' '}
-              {month(c.latest)}
-              {c.medians > 0 && `, and ${num(c.medians)} Queensland medians to ${month(c.quarter)}`}.
+              {month(c.latest)}, and {num(c.medians)} Queensland and Victorian medians to {month(c.quarter)}.
             </p>
           )}
         </div>
@@ -272,11 +329,7 @@ export default function App() {
 
       <main className="wrap">
         <form className="find" onSubmit={(e) => e.preventDefault()}>
-          <div>
-            <label htmlFor="pc">Postcode</label>
-            <input id="pc" inputMode="numeric" maxLength={4} value={pc}
-                   onChange={(e) => setPc(e.target.value.replace(/[^\d]/g, ''))} />
-          </div>
+          <Find pick={pick} />
           <div>
             <label htmlFor="kind">Dwelling</label>
             <select id="kind" value={kind} onChange={(e) => setKind(e.target.value)}>
@@ -290,20 +343,25 @@ export default function App() {
             </select>
           </div>
         </form>
-        {pc.length === 4 ? <Result pc={pc} kind={kind} beds={beds} /> : <p className="empty">Four digits.</p>}
+        <p className="here">
+          <strong>{place.area}</strong>
+          <span>{place.kind === 'postcode' ? place.label : place.state}</span>
+        </p>
+        <Result place={place} kind={kind} beds={beds} />
       </main>
 
       <div className="wrap">
-        <Allowed st={state(pc)} />
-        <Movers />
+        <Allowed st={place.state} />
+        <Movers pick={pick} />
       </div>
 
       <footer className="wrap">
         <p>
-          New South Wales bond lodgements from NSW Fair Trading and Queensland median rents from the Residential
-          Tenancies Authority, both CC BY 4.0. Rents are what was lodged, not what was advertised, and a bond is lodged
-          at the start of a tenancy, so this is the market for new leases rather than for sitting tenants.{' '}
-          <a href="https://github.com/ChangkeunJ/rent-check">Code</a>.
+          New South Wales bond lodgements from NSW Fair Trading, Queensland median rents from the Residential Tenancies
+          Authority and Victorian median rents from the Department of Families, Fairness and Housing, all CC BY 4.0.
+          Suburb names for each postal area from the Australian Bureau of Statistics, CC BY 2.5 AU. Rents are what was
+          lodged, not what was advertised, and a bond is lodged at the start of a tenancy, so this is the market for new
+          leases rather than for sitting tenants. <a href="https://github.com/ChangkeunJ/rent-check">Code</a>.
         </p>
       </footer>
     </>

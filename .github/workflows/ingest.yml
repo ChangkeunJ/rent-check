@@ -3,7 +3,7 @@ name: ingest
 on:
   schedule:
     # New South Wales posts the month's lodgements in the first fortnight of the
-    # next month; Queensland posts a quarter about three weeks after it ends.
+    # next month; Queensland and Victoria post a quarter a few weeks after it ends.
     - cron: '0 20 14 * *'
   workflow_dispatch:
 
@@ -30,6 +30,8 @@ jobs:
       - run: npm run build
       - run: node dist/src/nsw.js
       - run: node dist/src/qld.js
+      - run: node dist/src/vic.js
+      - run: node dist/src/place.js
       - run: node dist/src/summary.js
       - name: commit the month
         run: |

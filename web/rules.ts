@@ -1,5 +1,5 @@
-// What the Act says about raising the rent, in the two states whose bond data is
-// loaded. Each rule carries the section it comes from, because a rule without a
+// What the Act says about raising the rent, in the three states whose bond data
+// is loaded. Each rule carries the section it comes from, because a rule without a
 // citation is just an opinion.
 export type Rule = {
   act: string
@@ -36,6 +36,18 @@ export const RULES: Record<string, Rule> = {
     note:
       'The 12 months runs from the day the current rent became payable, and since 6 June 2024 it attaches to the property ' +
       'rather than the tenancy, so an increase to a previous tenant or by a previous owner still counts.',
+  },
+  VIC: {
+    act: 'Residential Tenancies Act 1997 (Vic), s 44',
+    law: 'https://www.legislation.vic.gov.au/in-force/acts/residential-tenancies-act-1997',
+    guide: 'https://www.consumer.vic.gov.au/housing/renting/rent-bond-bills-and-condition-reports/rent/rent-increases',
+    everyMonths: 12,
+    noticeDays: 90,
+    noticeSaid: '90 days',
+    since: '25 November 2025',
+    note:
+      'The rent cannot go up at intervals of less than 12 months, and since 25 November 2025 the notice period is 90 days ' +
+      'rather than 60. The notice has to be on the Consumer Affairs Victoria form; on the wrong form it is not a notice at all.',
   },
 }
 

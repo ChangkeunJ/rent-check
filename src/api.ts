@@ -9,12 +9,17 @@ const beds = (v: string | null) => (v === null || v === '' ? null : Number(v))
 
 const routes: Record<string, (p: URLSearchParams) => Promise<unknown>> = {
   '/api/coverage': async () => (await Q.coverage(q))[0],
+  '/api/find': (p) => Q.find(q, p.get('q') ?? ''),
   '/api/spread': async (p) =>
-    (await Q.spread(q, p.get('postcode') ?? '', p.get('dwelling') ?? 'H', beds(p.get('beds'))))[0],
+    (await Q.spread(q, p.get('area') ?? '', p.get('dwelling') ?? 'H', beds(p.get('beds'))))[0],
+  '/api/latest': async (p) =>
+    (await Q.latest(q, p.get('state') ?? '', p.get('kind') ?? 'postcode', p.get('area') ?? '',
+                    p.get('dwelling') ?? 'H', beds(p.get('beds'))))[0] ?? null,
   '/api/rank': async (p) =>
-    (await Q.rank(q, p.get('postcode') ?? '', p.get('dwelling') ?? 'H', beds(p.get('beds')), Number(p.get('rent') ?? 0)))[0],
+    (await Q.rank(q, p.get('area') ?? '', p.get('dwelling') ?? 'H', beds(p.get('beds')), Number(p.get('rent') ?? 0)))[0],
   '/api/series': (p) =>
-    Q.series(q, p.get('state') ?? 'NSW', p.get('postcode') ?? '', p.get('dwelling') ?? 'H', beds(p.get('beds'))),
+    Q.series(q, p.get('rows') === '1', p.get('state') ?? 'NSW', p.get('kind') ?? 'postcode', p.get('area') ?? '',
+             p.get('dwelling') ?? 'H', beds(p.get('beds'))),
   '/api/movers': (p) => Q.movers(q, 'NSW', p.get('dwelling') ?? 'H', beds(p.get('beds'))),
 }
 

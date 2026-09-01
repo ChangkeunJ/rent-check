@@ -40,7 +40,7 @@ export function parse(buf: Buffer): Median[] {
       const q = quarters[i]
       const rent = Number(row[i])
       if (!q || !Number.isFinite(rent) || rent <= 0) continue
-      out.push({ postcode: String(pc), dwelling, beds: Number(beds), quarter: q, rent })
+      out.push({ kind: 'postcode', area: String(pc), dwelling, beds: Number(beds), quarter: q, rent })
     }
   }
   return out

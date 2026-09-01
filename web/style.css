@@ -194,3 +194,28 @@ footer a { color: var(--acc); }
 
 .cite { margin: 0; padding: 4px 20px 18px; font-size: 12.5px; color: var(--muted); max-width: 74ch; }
 .cite a { color: var(--acc); }
+
+.find-box { position: relative; flex: 1 1 16rem; display: flex; flex-direction: column; gap: 4px; }
+.find-box input { width: 100%; }
+.hits {
+  position: absolute; z-index: 5; left: 0; right: 0; top: 100%; margin: .3rem 0 0;
+  list-style: none; padding: .25rem; max-height: 17rem; overflow-y: auto;
+  background: var(--card); border: 1px solid var(--line); border-radius: .5rem;
+  box-shadow: 0 .6rem 1.6rem rgb(0 0 0 / .16);
+}
+.hits li { margin: 0; }
+.hits button {
+  display: flex; gap: .6rem; align-items: baseline; width: 100%; text-align: left;
+  padding: .4rem .55rem; border: 0; border-radius: .35rem; background: none;
+  font: inherit; color: inherit; cursor: pointer;
+}
+.hits button:hover, .hits button:focus-visible { background: var(--paper); }
+.hits strong { font-variant-numeric: tabular-nums; }
+.hits span { color: var(--muted); font-size: .82rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hits .none { padding: .4rem .55rem; color: var(--muted); font-size: .85rem; }
+
+.here { display: flex; gap: .6rem; align-items: baseline; margin: 1rem 0 0; }
+.here strong { font-size: 1.05rem; }
+.here span { color: var(--muted); font-size: .85rem; }
+
+td.name em { display: block; font-style: normal; color: var(--muted); font-size: .78rem; }

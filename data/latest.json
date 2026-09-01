@@ -5,8 +5,9 @@
   "postcodes": 614,
   "latest": "2026-07-31",
   "earliest": "2021-01-01",
-  "medians": 65498,
-  "quarter": "2026-06-01"
+  "medians": 93271,
+  "quarter": "2026-06-01",
+  "vic": 27773
  },
  "sydney_2br_flat": {
   "n": 420,
@@ -17,9 +18,17 @@
   "high": "6200.00",
   "latest": "2026-07-31"
  },
+ "melbourne_2br_flat": {
+  "median": "735.00",
+  "n": 6605,
+  "p25": "650.00",
+  "p75": "820.00",
+  "latest": "2025-09-01"
+ },
  "movers": [
   {
    "postcode": "2440",
+   "label": "Deep Creek, Yarravel",
    "was": 450,
    "now": 540,
    "pct": 20,
@@ -27,6 +36,7 @@
   },
   {
    "postcode": "2204",
+   "label": "Marrickville",
    "was": 1025,
    "now": 1200,
    "pct": 17.1,
@@ -34,6 +44,7 @@
   },
   {
    "postcode": "2487",
+   "label": "Chinderah, Cudgen",
    "was": 950,
    "now": 1100,
    "pct": 15.8,
@@ -41,6 +52,7 @@
   },
   {
    "postcode": "2705",
+   "label": "Leeton, Murrami",
    "was": 402.5,
    "now": 465,
    "pct": 15.5,
@@ -48,6 +60,7 @@
   },
   {
    "postcode": "2284",
+   "label": "Teralba, Speers Point",
    "was": 610,
    "now": 700,
    "pct": 14.8,
@@ -55,6 +68,7 @@
   },
   {
    "postcode": "2482",
+   "label": "Goonengerry, Mullumbimby",
    "was": 830,
    "now": 950,
    "pct": 14.5,
@@ -62,6 +76,7 @@
   },
   {
    "postcode": "2112",
+   "label": "Ryde, Putney",
    "was": 875,
    "now": 1000,
    "pct": 14.3,
@@ -69,6 +84,7 @@
   },
   {
    "postcode": "2021",
+   "label": "Centennial Park, Moore Park",
    "was": 1525,
    "now": 1740,
    "pct": 14.1,
@@ -76,6 +92,7 @@
   },
   {
    "postcode": "2360",
+   "label": "Inverell, Wallangra",
    "was": 410,
    "now": 467.5,
    "pct": 14,
@@ -83,6 +100,7 @@
   },
   {
    "postcode": "2035",
+   "label": "Maroubra, Pagewood",
    "was": 1190,
    "now": 1350,
    "pct": 13.4,
