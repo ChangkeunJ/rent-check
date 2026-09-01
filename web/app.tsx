@@ -220,7 +220,7 @@ function Allowed({ st }: { st: string }) {
         </div>
       </div>
       {c && (
-        <ul className="verdicts">
+        <ul className="verdicts" aria-label="rent increase verdict">
           <li className={c.often ? 'ok' : 'no'}>
             <strong>{c.often ? 'Far enough apart.' : 'Too soon.'}</strong> {c.months} months since the current rent
             became payable, where the Act asks for {rule.everyMonths}.
