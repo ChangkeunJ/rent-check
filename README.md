@@ -5,7 +5,7 @@ lodgement carries the rent. It is the only public record of what a tenancy
 actually starts at, as against what the advertisement asked for. Two states
 publish it, and they publish two different things.
 
-    https://rent-check.pages.dev
+    https://rent-check-5kx.pages.dev
 
 New South Wales publishes every lodgement, one row each: the date, the postcode,
 the dwelling type, the number of bedrooms and the weekly rent. 1.8 million of

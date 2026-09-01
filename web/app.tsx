@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { RULES, check } from './rules'
 
 type Cover = { lodgements: number; postcodes: number; latest: string; earliest: string; medians: number; quarter: string }
 type Spread = { n: number; p25: string; median: string; p75: string; low: string; high: string; latest: string }
@@ -146,6 +147,58 @@ function Result({ pc, kind, beds }: { pc: string; kind: string; beds: string }) 
   )
 }
 
+// The other half of the question. What the median is worth knowing next to is
+// whether the increase was allowed at all, and that is a matter of two dates.
+function Allowed({ st }: { st: string }) {
+  const rule = RULES[st]
+  const [since, setSince] = useState('')
+  const [from, setFrom] = useState('')
+  const [told, setTold] = useState('')
+  if (!rule) return null
+  const ready = since && from && told
+  const c = ready ? check(rule, new Date(since), new Date(from), new Date(told)) : null
+
+  return (
+    <section>
+      <div className="bar">
+        <h2>Was the increase allowed?</h2>
+        <p className="note">{rule.note}</p>
+      </div>
+      <div className="dates">
+        <div>
+          <label htmlFor="since">Current rent started</label>
+          <input id="since" type="date" value={since} onChange={(e) => setSince(e.target.value)} />
+        </div>
+        <div>
+          <label htmlFor="from">New rent starts</label>
+          <input id="from" type="date" value={from} onChange={(e) => setFrom(e.target.value)} />
+        </div>
+        <div>
+          <label htmlFor="told">Notice given</label>
+          <input id="told" type="date" value={told} onChange={(e) => setTold(e.target.value)} />
+        </div>
+      </div>
+      {c && (
+        <ul className="verdicts">
+          <li className={c.often ? 'ok' : 'no'}>
+            <strong>{c.often ? 'Far enough apart.' : 'Too soon.'}</strong> {c.months} months since the current rent
+            became payable, where the Act asks for {rule.everyMonths}.
+          </li>
+          <li className={c.notice ? 'ok' : 'no'}>
+            <strong>{c.notice ? 'Enough notice.' : 'Short notice.'}</strong> {c.days} days between the notice and the
+            day the new rent starts, where the Act asks for {rule.noticeSaid}.
+          </li>
+        </ul>
+      )}
+      <p className="cite">
+        {rule.act}, as it has stood since {rule.since}. <a href={rule.law}>The section</a> and the{' '}
+        <a href={rule.guide}>government's own guidance</a>. This reads two dates against one rule; it is not advice, and
+        it knows nothing about your agreement.
+      </p>
+    </section>
+  )
+}
+
 function Movers() {
   const [kind, setKind] = useState('H')
   const [beds, setBeds] = useState('3')
@@ -210,7 +263,8 @@ export default function App() {
           {c && (
             <p className="cover">
               {num(c.lodgements)} bond lodgements across {c.postcodes} New South Wales postcodes, {month(c.earliest)} to{' '}
-              {month(c.latest)}, and {num(c.medians)} Queensland medians to {month(c.quarter)}.
+              {month(c.latest)}
+              {c.medians > 0 && `, and ${num(c.medians)} Queensland medians to ${month(c.quarter)}`}.
             </p>
           )}
         </div>
@@ -239,7 +293,10 @@ export default function App() {
         {pc.length === 4 ? <Result pc={pc} kind={kind} beds={beds} /> : <p className="empty">Four digits.</p>}
       </main>
 
-      <div className="wrap"><Movers /></div>
+      <div className="wrap">
+        <Allowed st={state(pc)} />
+        <Movers />
+      </div>
 
       <footer className="wrap">
         <p>
