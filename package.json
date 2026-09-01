@@ -13,7 +13,7 @@
     "build:worker": "esbuild worker/index.ts --bundle --format=esm --target=es2022 --conditions=worker,browser --outfile=public/_worker.js",
     "build:web": "tsc -p web/tsconfig.json && vite build && npm run build:worker",
     "check": "tsc && tsc -p web/tsconfig.json && tsc -p worker/tsconfig.json",
-    "deploy": "npm run build:web && wrangler pages deploy",
+    "deploy": "npm run build:web && wrangler pages deploy --branch main",
     "nsw": "tsc && node dist/src/nsw.js",
     "qld": "tsc && node dist/src/qld.js",
     "serve": "tsc && node dist/src/api.js",
