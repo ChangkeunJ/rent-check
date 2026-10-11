@@ -21,7 +21,7 @@
     "place": "tsc && node dist/src/place.js"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",
@@ -30,7 +30,7 @@
     "react-dom": "^19.2.8"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20260702.1",
+    "@cloudflare/workers-types": "^5.20261011.1",
     "@types/node": "^22.10.2",
     "@types/pg": "^8.11.10",
     "@types/react": "^19.2.18",
