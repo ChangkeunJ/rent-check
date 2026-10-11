@@ -1,0 +1,110 @@
+{
+ "date": "2026-09-17",
+ "coverage": {
+  "lodgements": 1828633,
+  "postcodes": 614,
+  "latest": "2026-08-31",
+  "earliest": "2021-01-01",
+  "medians": 93271,
+  "quarter": "2026-06-01",
+  "vic": 27773
+ },
+ "sydney_2br_flat": {
+  "n": 482,
+  "p25": 1200,
+  "median": 1400,
+  "p75": 1650,
+  "low": "254.00",
+  "high": "6200.00",
+  "latest": "2026-08-31"
+ },
+ "melbourne_2br_flat": {
+  "median": "735.00",
+  "n": 6605,
+  "p25": "650.00",
+  "p75": "820.00",
+  "latest": "2025-09-01"
+ },
+ "movers": [
+  {
+   "postcode": "2820",
+   "label": "Gollan, Spicers Creek",
+   "was": 450,
+   "now": 562.5,
+   "pct": 25,
+   "n": 34
+  },
+  {
+   "postcode": "2204",
+   "label": "Marrickville",
+   "was": 1000,
+   "now": 1212.5,
+   "pct": 21.3,
+   "n": 30
+  },
+  {
+   "postcode": "2088",
+   "label": "Mosman",
+   "was": 1675,
+   "now": 2000,
+   "pct": 19.4,
+   "n": 21
+  },
+  {
+   "postcode": "2440",
+   "label": "Deep Creek, Yarravel",
+   "was": 470,
+   "now": 550,
+   "pct": 17,
+   "n": 37
+  },
+  {
+   "postcode": "2141",
+   "label": "Lidcombe, Rookwood",
+   "was": 720,
+   "now": 840,
+   "pct": 16.7,
+   "n": 28
+  },
+  {
+   "postcode": "2256",
+   "label": "Woy Woy Bay, Koolewong",
+   "was": 650,
+   "now": 750,
+   "pct": 15.4,
+   "n": 35
+  },
+  {
+   "postcode": "2484",
+   "label": "Round Mountain, Cudgera Creek",
+   "was": 650,
+   "now": 750,
+   "pct": 15.4,
+   "n": 26
+  },
+  {
+   "postcode": "2360",
+   "label": "Inverell, Wallangra",
+   "was": 400,
+   "now": 460,
+   "pct": 15,
+   "n": 37
+  },
+  {
+   "postcode": "2137",
+   "label": "Concord, North Strathfield",
+   "was": 962.5,
+   "now": 1100,
+   "pct": 14.3,
+   "n": 23
+  },
+  {
+   "postcode": "2749",
+   "label": "Castlereagh, Cranebrook",
+   "was": 600,
+   "now": 680,
+   "pct": 13.3,
+   "n": 45
+  }
+ ]
+}

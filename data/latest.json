@@ -1,22 +1,22 @@
 {
- "date": "2026-09-01",
+ "date": "2026-09-17",
  "coverage": {
-  "lodgements": 1801300,
+  "lodgements": 1828633,
   "postcodes": 614,
-  "latest": "2026-07-31",
+  "latest": "2026-08-31",
   "earliest": "2021-01-01",
   "medians": 93271,
   "quarter": "2026-06-01",
   "vic": 27773
  },
  "sydney_2br_flat": {
-  "n": 420,
+  "n": 482,
   "p25": 1200,
   "median": 1400,
   "p75": 1650,
   "low": "254.00",
   "high": "6200.00",
-  "latest": "2026-07-31"
+  "latest": "2026-08-31"
  },
  "melbourne_2br_flat": {
   "median": "735.00",
@@ -27,84 +27,84 @@
  },
  "movers": [
   {
-   "postcode": "2440",
-   "label": "Deep Creek, Yarravel",
+   "postcode": "2820",
+   "label": "Gollan, Spicers Creek",
    "was": 450,
-   "now": 540,
-   "pct": 20,
-   "n": 43
+   "now": 562.5,
+   "pct": 25,
+   "n": 34
   },
   {
    "postcode": "2204",
    "label": "Marrickville",
-   "was": 1025,
-   "now": 1200,
-   "pct": 17.1,
-   "n": 27
+   "was": 1000,
+   "now": 1212.5,
+   "pct": 21.3,
+   "n": 30
   },
   {
-   "postcode": "2487",
-   "label": "Chinderah, Cudgen",
-   "was": 950,
-   "now": 1100,
-   "pct": 15.8,
-   "n": 20
+   "postcode": "2088",
+   "label": "Mosman",
+   "was": 1675,
+   "now": 2000,
+   "pct": 19.4,
+   "n": 21
   },
   {
-   "postcode": "2705",
-   "label": "Leeton, Murrami",
-   "was": 402.5,
-   "now": 465,
-   "pct": 15.5,
+   "postcode": "2440",
+   "label": "Deep Creek, Yarravel",
+   "was": 470,
+   "now": 550,
+   "pct": 17,
+   "n": 37
+  },
+  {
+   "postcode": "2141",
+   "label": "Lidcombe, Rookwood",
+   "was": 720,
+   "now": 840,
+   "pct": 16.7,
    "n": 28
   },
   {
-   "postcode": "2284",
-   "label": "Teralba, Speers Point",
-   "was": 610,
-   "now": 700,
-   "pct": 14.8,
+   "postcode": "2256",
+   "label": "Woy Woy Bay, Koolewong",
+   "was": 650,
+   "now": 750,
+   "pct": 15.4,
+   "n": 35
+  },
+  {
+   "postcode": "2484",
+   "label": "Round Mountain, Cudgera Creek",
+   "was": 650,
+   "now": 750,
+   "pct": 15.4,
    "n": 26
-  },
-  {
-   "postcode": "2482",
-   "label": "Goonengerry, Mullumbimby",
-   "was": 830,
-   "now": 950,
-   "pct": 14.5,
-   "n": 23
-  },
-  {
-   "postcode": "2112",
-   "label": "Ryde, Putney",
-   "was": 875,
-   "now": 1000,
-   "pct": 14.3,
-   "n": 27
-  },
-  {
-   "postcode": "2021",
-   "label": "Centennial Park, Moore Park",
-   "was": 1525,
-   "now": 1740,
-   "pct": 14.1,
-   "n": 37
   },
   {
    "postcode": "2360",
    "label": "Inverell, Wallangra",
-   "was": 410,
-   "now": 467.5,
-   "pct": 14,
-   "n": 30
+   "was": 400,
+   "now": 460,
+   "pct": 15,
+   "n": 37
   },
   {
-   "postcode": "2035",
-   "label": "Maroubra, Pagewood",
-   "was": 1190,
-   "now": 1350,
-   "pct": 13.4,
-   "n": 34
+   "postcode": "2137",
+   "label": "Concord, North Strathfield",
+   "was": 962.5,
+   "now": 1100,
+   "pct": 14.3,
+   "n": 23
+  },
+  {
+   "postcode": "2749",
+   "label": "Castlereagh, Cranebrook",
+   "was": 600,
+   "now": 680,
+   "pct": 13.3,
+   "n": 45
   }
  ]
 }
