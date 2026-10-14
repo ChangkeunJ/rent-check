@@ -1,0 +1,110 @@
+{
+ "date": "2026-10-14",
+ "coverage": {
+  "lodgements": 1855098,
+  "postcodes": 614,
+  "latest": "2026-09-30",
+  "earliest": "2021-01-01",
+  "medians": 93271,
+  "quarter": "2026-06-01",
+  "vic": 27773
+ },
+ "sydney_2br_flat": {
+  "n": 478,
+  "p25": 1170,
+  "median": 1350,
+  "p75": 1600,
+  "low": "600.00",
+  "high": "2850.00",
+  "latest": "2026-09-30"
+ },
+ "melbourne_2br_flat": {
+  "median": "735.00",
+  "n": 6605,
+  "p25": "650.00",
+  "p75": "820.00",
+  "latest": "2025-09-01"
+ },
+ "movers": [
+  {
+   "postcode": "2820",
+   "label": "Gollan, Spicers Creek",
+   "was": 420,
+   "now": 530,
+   "pct": 26.2,
+   "n": 41
+  },
+  {
+   "postcode": "2487",
+   "label": "Chinderah, Cudgen",
+   "was": 950,
+   "now": 1147.5,
+   "pct": 20.8,
+   "n": 20
+  },
+  {
+   "postcode": "2477",
+   "label": "Alstonville, Wollongbar",
+   "was": 670,
+   "now": 800,
+   "pct": 19.4,
+   "n": 23
+  },
+  {
+   "postcode": "2040",
+   "label": "Leichhardt, Lilyfield",
+   "was": 1050,
+   "now": 1220,
+   "pct": 16.2,
+   "n": 37
+  },
+  {
+   "postcode": "2753",
+   "label": "Londonderry, Richmond",
+   "was": 620,
+   "now": 720,
+   "pct": 16.1,
+   "n": 38
+  },
+  {
+   "postcode": "2360",
+   "label": "Inverell, Wallangra",
+   "was": 400,
+   "now": 460,
+   "pct": 15,
+   "n": 43
+  },
+  {
+   "postcode": "2780",
+   "label": "Katoomba, Leura",
+   "was": 600,
+   "now": 690,
+   "pct": 15,
+   "n": 23
+  },
+  {
+   "postcode": "2333",
+   "label": "Baerami Creek, Muswellbrook",
+   "was": 480,
+   "now": 550,
+   "pct": 14.6,
+   "n": 61
+  },
+  {
+   "postcode": "2204",
+   "label": "Marrickville",
+   "was": 960,
+   "now": 1100,
+   "pct": 14.6,
+   "n": 31
+  },
+  {
+   "postcode": "2705",
+   "label": "Leeton, Murrami",
+   "was": 430,
+   "now": 490,
+   "pct": 14,
+   "n": 32
+  }
+ ]
+}
