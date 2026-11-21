@@ -1,0 +1,110 @@
+{
+ "date": "2026-11-21",
+ "coverage": {
+  "lodgements": 1879615,
+  "postcodes": 614,
+  "latest": "2026-10-31",
+  "earliest": "2021-01-01",
+  "medians": 97471,
+  "quarter": "2026-09-01",
+  "vic": 31130
+ },
+ "sydney_2br_flat": {
+  "n": 436,
+  "p25": 1150,
+  "median": 1310,
+  "p75": 1580,
+  "low": "420.00",
+  "high": "3200.00",
+  "latest": "2026-10-31"
+ },
+ "melbourne_2br_flat": {
+  "median": "750.00",
+  "n": 6461,
+  "p25": "675.00",
+  "p75": "850.00",
+  "latest": "2026-06-01"
+ },
+ "movers": [
+  {
+   "postcode": "2820",
+   "label": "Gollan, Spicers Creek",
+   "was": 420,
+   "now": 535,
+   "pct": 27.4,
+   "n": 34
+  },
+  {
+   "postcode": "2477",
+   "label": "Alstonville, Wollongbar",
+   "was": 660,
+   "now": 790,
+   "pct": 19.7,
+   "n": 27
+  },
+  {
+   "postcode": "2480",
+   "label": "South Gundurimba, Koonorigan",
+   "was": 585,
+   "now": 677.5,
+   "pct": 15.8,
+   "n": 58
+  },
+  {
+   "postcode": "2780",
+   "label": "Katoomba, Leura",
+   "was": 600,
+   "now": 692.5,
+   "pct": 15.4,
+   "n": 24
+  },
+  {
+   "postcode": "2705",
+   "label": "Leeton, Murrami",
+   "was": 430,
+   "now": 495,
+   "pct": 15.1,
+   "n": 26
+  },
+  {
+   "postcode": "2040",
+   "label": "Leichhardt, Lilyfield",
+   "was": 1050,
+   "now": 1200,
+   "pct": 14.3,
+   "n": 36
+  },
+  {
+   "postcode": "2213",
+   "label": "Panania, Picnic Point",
+   "was": 735,
+   "now": 827.5,
+   "pct": 12.6,
+   "n": 32
+  },
+  {
+   "postcode": "2360",
+   "label": "Inverell, Wallangra",
+   "was": 400,
+   "now": 450,
+   "pct": 12.5,
+   "n": 53
+  },
+  {
+   "postcode": "2141",
+   "label": "Lidcombe, Rookwood",
+   "was": 730,
+   "now": 820,
+   "pct": 12.3,
+   "n": 23
+  },
+  {
+   "postcode": "2291",
+   "label": "Merewether, Merewether Heights",
+   "was": 850,
+   "now": 950,
+   "pct": 11.8,
+   "n": 33
+  }
+ ]
+}
